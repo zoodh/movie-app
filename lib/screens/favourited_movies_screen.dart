@@ -1,6 +1,6 @@
 //todo
 // fetch the favourited movies from the firestoer
-//display in a list view
+//display in a list view //done :)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:moviesapp/riverpods/firebase_providers.dart';
 
 class FavouriteMoviesScreen extends ConsumerWidget {
 @override
-Widget build(BuildContext context, WidgetRef ref) {
+Widget build(context, WidgetRef ref) {
   final user = ref.read(firebaseAuthProvider).currentUser;
   return Scaffold(
     appBar: AppBar(
