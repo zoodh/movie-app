@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081857925062",
+    "project_id": "aflami-908c6",
+    "storage_bucket": "aflami-908c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081857925062:android:1e2ac4f7f2ebc1d7b81cc7",
+        "android_client_info": {
+          "package_name": "com.example.aflami"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEAwVwvb359LCqioOnHoZQN71tW4WrGJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081857925062:android:6ac60ebfb03669ccb81cc7",
+        "android_client_info": {
+          "package_name": "com.example.moviesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEAwVwvb359LCqioOnHoZQN71tW4WrGJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
