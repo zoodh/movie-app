@@ -74,8 +74,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               title: Text('Favorite Movies'),
               onTap: () {
                 Navigator.pop(context);
-                context.goNamed(RoutePaths.favouritescreen.toString());
-              },
+               context.goNamed(RoutePaths.favouritescreen.toString());
+
+                },
             ),
           ],
         ),

@@ -5,7 +5,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviesapp/riverpods/favouriting_provider.dart';
 import 'package:moviesapp/riverpods/firebase_providers.dart';
+
+import 'movie_details.dart';
 
 class FavouriteMoviesScreen extends ConsumerWidget {
 @override
@@ -48,6 +51,7 @@ Widget build(context, WidgetRef ref) {
             final movie = movies[index].data() as Map<String, dynamic>;
             final title = movie['title'] ?? 'Unknown Title';
             final year = movie['year'] ?? 'Unknown Year';
+            final movieId = movie['movie_id'];
             return ListTile(
               title: Text(
                 title,
@@ -55,7 +59,19 @@ Widget build(context, WidgetRef ref) {
               ),
               subtitle: Text('Year: $year'),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MovieDetailsPage(movieId: movieId)),
+                );
               },
+              trailing: IconButton(onPressed: () {
+                ref.read(FavouriteProvider(movieId.toString()).notifier).deleteMovie
+                  (movieId,
+                    year,
+                    title);
+
+              }, icon: Icon(Icons.delete_forever, color: Colors.red)),
+
             );
           },
         );
