@@ -64,4 +64,19 @@ Future<void> filterMovies(String query) async {
     print('Error searching movies: $e');
   }
 }
+Future<void> filterMoviesByGenre(String genre) async {
+  if (genre.isEmpty) {
+    return;
+  }
+
+  try {
+    final response = await _ytsApi.fetchMovies(genre: genre);
+    final List<Movie> moviesData =
+    response.map((movieJson) => Movie.fromJson(movieJson)).toList();
+    state = moviesData;
+  } catch (e) {
+    print('Error filtering movies by genre: $e');
+  }
 }
+}
+

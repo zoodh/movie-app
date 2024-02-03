@@ -14,7 +14,9 @@ void main() async {
       projectId: 'aflami-908c6',
     ),
   );
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope
+    (child:
+  MyApp()));
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,10 +26,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
         routerConfig: router,
         title: "Go router",
-      theme: ThemeData(
-        primaryColor: Colors.deepPurple,
-        primarySwatch: Colors.blue,
-      ),
     );
   }
 }

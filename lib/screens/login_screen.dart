@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesapp/riverpods/auth_providers.dart';
+import 'package:moviesapp/routes/routes.dart';
 
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -35,8 +37,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                final authNotifier = ref.read(AuthenticationProvider.notifier);
-                await authNotifier.login(
+                ref.read(AuthenticationProvider.notifier).login(
                   context,
                   emailController,
                   passwordController,
@@ -47,12 +48,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             const SizedBox(height: 16),
             TextButton(
               onPressed: () async {
-                final authNotifier = ref.read(AuthenticationProvider.notifier);
-                await authNotifier.register(
-                  context,
-                  emailController,
-                  passwordController,
-                );
+                context.goNamed(RoutePaths.registration.toString());
               },
               child: const Text('Dont have an account? tap here!'),
             ),

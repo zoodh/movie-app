@@ -13,7 +13,7 @@ Widget build(context, WidgetRef ref) {
   final user = ref.read(firebaseAuthProvider).currentUser;
   return Scaffold(
     appBar: AppBar(
-      title: Center(child:
+      title: const Center(child:
       Text('Favorite Movies')),
     ),
     body: StreamBuilder<QuerySnapshot>(

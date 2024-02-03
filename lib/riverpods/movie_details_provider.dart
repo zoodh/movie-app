@@ -7,17 +7,17 @@ import '../api.dart';
 
 
 
-final DetailsProvider = NotifierProvider<DetailsNotifier,Map<String, dynamic>>(
+final DetailsProvider = NotifierProvider.autoDispose<DetailsNotifier,Map<String, dynamic>>(
   DetailsNotifier.new,
 );
 
-class DetailsNotifier extends Notifier<Map<String, dynamic>> {
+class DetailsNotifier extends AutoDisposeNotifier<Map<String, dynamic>> {
   final YtsApi _ytsApi = YtsApi();
   late int movieId;
 
   @override
   build() {
-    return {};
+    return state;
   }
 
   Future<void> loadMovieDetails(movieId) async {

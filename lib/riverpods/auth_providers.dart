@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:moviesapp/routes/routes.dart';
 import 'firebase_providers.dart';
 
 
@@ -28,7 +29,7 @@ class AuthenticationNotifier extends Notifier<void> {
         email: emailController.text,
         password: passwordController.text,
       );
-      context.go("/home");
+      context.goNamed(RoutePaths.home.toString());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

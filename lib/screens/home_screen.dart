@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesapp/riverpods/movie_providers.dart';
+import 'package:moviesapp/routes/routes.dart';
+import '../widgets/movie_card.dart';
 import 'favourited_movies_screen.dart';
-import 'movie_details.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   @override
@@ -34,11 +36,22 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Movie App')),
-        backgroundColor: Colors.deepPurpleAccent,
+        centerTitle: true,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Image.asset(
+              'assets/aflami.png',
+              height: 30,
+              width: 30,
+            ),
+            SizedBox(width: 7),
+            Text('Aflami',),
+          ],
+        ),
         actions: [],
       ),
       drawer: Drawer(
@@ -61,17 +74,14 @@ class _HomePageState extends ConsumerState<HomePage> {
               title: Text('Favorite Movies'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FavouriteMoviesScreen()),
-                );
+                context.goNamed(RoutePaths.favouritescreen.toString());
               },
             ),
           ],
         ),
       ),
       body: Container(
-        color: Colors.deepPurple,
+        color: Colors.black,
         child: Column(
           children: [
             Padding(
@@ -82,7 +92,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                 },
                 decoration: InputDecoration(
                   hintText: 'Search movies',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(Icons.search, color: Colors.purple,),
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Icon(Icons.filter_list,color: Colors.purple,)
+                    ,
+                  ),
                 ),
               ),
             ),
@@ -91,41 +108,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                 builder: (context, watch, child) {
                   final moviesState = ref.watch(MoviesProvider);
                   if (moviesState.isNotEmpty) {
-                    return ListView.separated(
+                    return ListView.builder(
                       controller: _scrollController,
                       itemCount: moviesState.length,
-                      separatorBuilder: (context, int index) =>
-                          Divider(
-                            color: Colors.grey,
-                          ),
                       itemBuilder: (context, index) {
                         final movie = moviesState[index];
                         if (index == moviesState.length - 1) {
                           ref.read(MoviesProvider.notifier).loadMoreMovies();
                         }
-                        return ListTile(
-                          title: Text(
-                            movie.title,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          subtitle: Text(
-                            'Year: ${movie.year}',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          leading: Image.network(
-                            movie.mediumCoverImage,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MovieDetailsPage(movieId: movie.id,),
-                              ),
-                            );
-                          },
+                        return MovieCard(
+                          movie: movie,
                         );
                       },
                     );
