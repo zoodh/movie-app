@@ -5,9 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:moviesapp/riverpods/movie_providers.dart';
 import 'package:moviesapp/routes/routes.dart';
 import '../widgets/movie_card.dart';
-import 'favourited_movies_screen.dart';
 
 class HomePage extends ConsumerStatefulWidget {
+  final String? genre;
+  const HomePage({super.key, this.genre});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -19,7 +20,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
-    ref.read(MoviesProvider.notifier).loadMovies();
+    final genre = widget.genre;
+    if (genre != null) {
+      ref.read(MoviesProvider.notifier).filterMoviesByGenre(genre);
+    } else {
+      ref.read(MoviesProvider.notifier).loadMovies();
+    }
   }
 
   @override
@@ -42,7 +48,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         centerTitle: true,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
+          children:[
             Image.asset(
               'assets/aflami.png',
               height: 30,
@@ -52,7 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             Text('Aflami',),
           ],
         ),
-        actions: [],
+
       ),
       drawer: Drawer(
         child: ListView(
@@ -87,21 +93,26 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                onChanged: (query) {
-                  ref.read(MoviesProvider.notifier).filterMovies(query);
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search movies',
-                  prefixIcon: Icon(Icons.search, color: Colors.purple,),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-
-                    },
-                    child: Icon(Icons.filter_list,color: Colors.purple,)
-                    ,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onChanged: (query) {
+                        ref.read(MoviesProvider.notifier).filterMovies(query);
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search movies',
+                        prefixIcon: Icon(Icons.search, color: Colors.purple),
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () {
+                      context.pushNamed(RoutePaths.genrescreen.toString());
+                    },
+                    icon: Icon(Icons.filter_list, color: Colors.purple),
+                  ),
+                ],
               ),
             ),
             Expanded(

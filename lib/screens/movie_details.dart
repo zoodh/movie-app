@@ -5,6 +5,7 @@ import 'package:moviesapp/riverpods/movie_details_provider.dart';
 import 'package:moviesapp/riverpods/favouriting_provider.dart';
 class MovieDetailsPage extends ConsumerStatefulWidget {
   final int movieId;
+
   const MovieDetailsPage({super.key, required this.movieId});
 
   @override
@@ -13,25 +14,41 @@ class MovieDetailsPage extends ConsumerStatefulWidget {
 }
 
 class _MovieDetailsPageState extends ConsumerState<MovieDetailsPage> {
+
   bool isFavourited = false;
   @override
   void initState() {
     super.initState();
-    ref.read(DetailsProvider.notifier).loadMovieDetails(widget.movieId);
+    ref.read(detailsProvider.notifier).loadMovieDetails(widget.movieId);
+
+
 
   }
 
   @override
   Widget build(context) {
+    String heroTag = 'movieHero_${widget.movieId}';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movie Details'),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children:[
+            Image.asset(
+              'assets/aflami.png',
+              height: 30,
+              width: 30,
+            ),
+            SizedBox(width: 7),
+            Text('Aflami',),
+          ],
+        ),
       ),
+      backgroundColor: Colors.black,
       body: Consumer(
         builder: (context, watch, child) {
 
-          final movieDetails = ref.watch(DetailsProvider);
+          final movieDetails = ref.watch(detailsProvider);
           if (movieDetails == null) {
             return Center(
               child: CircularProgressIndicator(),
@@ -45,11 +62,14 @@ class _MovieDetailsPageState extends ConsumerState<MovieDetailsPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: Image.network(
-                          movieDetails['large_cover_image'],
-                          height: 400,
-                          width: 300,
-                          fit: BoxFit.cover,
+                        child: Hero(
+                          tag: heroTag,
+                          child: Image.network(
+                            movieDetails['large_cover_image'],
+                            height: 400,
+                            width: 300,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ],
@@ -63,25 +83,38 @@ class _MovieDetailsPageState extends ConsumerState<MovieDetailsPage> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                      'Year: ${movieDetails['year'] != null ? movieDetails['year'].toString() : 'no year available'}'
+                    'Year: ${movieDetails['year'] != null ? movieDetails['year'].toString() : 'no year available'}',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                      'Rating: ${movieDetails['rating'] != null ? movieDetails['rating'].toString() : 'no rating available'}'
+                    'Rating: ${movieDetails['rating'] != null ? movieDetails['rating'].toString() : 'no rating available'}',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Runtime: ${movieDetails['runtime'] != null ? movieDetails['runtime'].toString() : 'no runtime'} minutes',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Description:\n ${movieDetails['description_full'] != null
                         && movieDetails['description_full'].toString().isNotEmpty ? movieDetails['description_full'].toString() : 'No description available'}',
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 16),
                   StreamBuilder<bool>(
@@ -122,6 +155,14 @@ class _MovieDetailsPageState extends ConsumerState<MovieDetailsPage> {
                       }
                     },
                   ),
+                  TextField(
+                    decoration: InputDecoration(filled:  true,
+                      hintText: 'leave a review!',
+                    ),
+
+                    style: TextStyle(color: Colors.white),
+
+                  )
                 ],
               ),
             ),

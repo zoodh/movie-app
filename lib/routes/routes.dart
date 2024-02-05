@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:moviesapp/screens/favourited_movies_screen.dart';
+import 'package:moviesapp/screens/genre_screen.dart';
 import 'package:moviesapp/screens/home_screen.dart';
 import 'package:moviesapp/screens/login_screen.dart';
 import 'package:moviesapp/screens/registiration_screen.dart';
@@ -37,7 +38,13 @@ final GoRouter router = GoRouter(
         name: RoutePaths.favouritescreen.toString(),
         path: "favouritescreen",
         builder: (context, state) => FavouriteMoviesScreen(),
+        ),
+        GoRoute(
+          name: RoutePaths.genrescreen.toString(),
+          path: "genrescreen",
+          builder: (context, state) => GenreScreen(),
         )
+
 
       ],
     ),
@@ -51,4 +58,5 @@ enum RoutePaths {
   movieDetails,
   registration,
   favouritescreen,
+  genrescreen,
 }

@@ -10,21 +10,27 @@ class MovieCard extends StatelessWidget {
   const MovieCard({super.key, required this.movie});
   @override
   Widget build(BuildContext context) {
+    final heroTag = 'movieHero_${movie.id}';
     return Card(
       child: InkWell(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MovieDetailsPage(movieId: movie.id)),
+            MaterialPageRoute(builder: (context) =>
+               MovieDetailsPage(movieId: movie.id,)
+              )
           );
       },
         child: Stack(
           children: [
-            Image.network(
-              movie.mediumCoverImage,
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
+            Hero(
+              tag: heroTag,
+              child: Image.network(
+                movie.mediumCoverImage,
+                width: double.infinity,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ),
             Positioned.fill(
               child: Container(

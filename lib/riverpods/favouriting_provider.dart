@@ -12,7 +12,7 @@ final FavouriteProvider = NotifierProvider.family<FavouriteNotifier, bool, Strin
 class FavouriteNotifier extends FamilyNotifier<bool, String> {
   @override
   bool build(String arg) {
-    return false;
+    return state;
   }
 
   Future<void> saveMovie(int movieId, String year, String title) async {

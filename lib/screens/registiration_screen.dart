@@ -16,8 +16,6 @@ class _RegistirationPageState extends ConsumerState<RegistirationPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
-  // will use this data in the userobject later
-
   @override
   Widget build(context) {
     return Scaffold(
@@ -53,6 +51,8 @@ class _RegistirationPageState extends ConsumerState<RegistirationPage> {
                         context,
                         emailController,
                         passwordController,
+                        numberController,
+                        nameController,
                       );
                       context.go("/");
                     },
