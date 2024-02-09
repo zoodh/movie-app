@@ -10,7 +10,7 @@ NotifierProvider.autoDispose<MoviesNotifier, List<Movie>>(
   MoviesNotifier.new,
 );
 
-class MoviesNotifier extends AutoDisposeNotifier<List<Movie>> {
+class MoviesNotifier extends  AutoDisposeNotifier<List<Movie>> {
 final YtsApi _ytsApi = YtsApi();
 int _currentPage = 1;
 

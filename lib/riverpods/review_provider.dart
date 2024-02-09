@@ -1,12 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_providers.dart';
-final ReviewProvider =  NotifierProvider<ReviewNotifier, String>(
-  ReviewNotifier.new,
+final reviewProvider =  NotifierProvider<Reviewnotifier, String>(
+  Reviewnotifier.new,
 );
 
-class ReviewNotifier extends Notifier<String> {
+class Reviewnotifier extends Notifier<String> {
   @override
   build() {
     return state;
@@ -25,6 +26,22 @@ class ReviewNotifier extends Notifier<String> {
       print('Error posting review: $e');
     }
   }
+
+  Stream<QuerySnapshot> fetchReviews(int movieId) {
+    try {
+      final Stream<QuerySnapshot> stream = ref
+          .read(firestoreProvider)
+          .collection('reviews')
+          .where('movie_id', isEqualTo: movieId)
+          .snapshots();
+
+      return stream;
+    } catch (e) {
+      print('Error fetching reviews: $e');
+      return Stream.empty();
+    }
+  }
+
 
 
 }
